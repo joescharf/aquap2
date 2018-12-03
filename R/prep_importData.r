@@ -607,6 +607,7 @@ checkForPresenceOfData <- function() {
 #' @export
 getFullData <- function(md=getmd(), filetype="def", naString="NA", slType="def", trhLog="def", multiplyRows="def", ttl=TRUE, stf=TRUE, dol="def") {
 	autoUpS()
+	cat("in getFullData \n")
 	gfd_checkLoadSaveLogic(ttl, stf)
 	gfd_checkMetadata(md)
 	dataset <- NULL

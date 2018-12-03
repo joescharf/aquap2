@@ -8,6 +8,8 @@ getNIRData_Vision_da <- function(dataFile) {
 	nrCol <- readBin(fCon, integer(), 1, 2)
 	firstWl <- readBin(fCon, integer(), 1, 2)
 	lastWl <- readBin(fCon, integer(), 1, 2)
+  cat("fSize ", fSize, "nrCol: ", nrCol, "firstWl: ", firstWl, "lastWl: ", lastWl, "\n")
+  # cat("GetNirData, fCon: " fCon, " fSize: ", fSize " nrCol: ", nrCol, " firstWl: ", firstWl, " lastWl: ", lastWl, "\n")
 
 #	a <- readBin(fCon, raw(), 108, 1) ## to get to position 128
 #	a <- readBin(fCon, double(), nrCol, 4) ## to get to the end fo the data
