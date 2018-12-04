@@ -43,7 +43,7 @@ stn <- list(
 	p_groupCol = "Group", 					## the name of the column containing the groups (like e.g. experiment and control)
 	p_deleteCol = "DELETE", 				## the character indicating that this column should be omitted at the time of creating the sample list, usually needed for L2-columns that are identical to their L1-columns
 	p_noTimePointsLabel = "NT", 			## the value assigned to every observation when there is no splitting into time points
-	p_sampleListExportFormat = "txt", 		## the format for the generated sample list, possible values are "txt" for a tab-delimited text file and "xls" for an Excel-file.
+	p_sampleListExportFormat = "xls", 		## the format for the generated sample list, possible values are "txt" for a tab-delimited text file and "xls" for an Excel-file.
 	p_outlierCol = "outlier", 				## the name of any column containing the flags showing outliers
 	p_outlierCol_allSuffix = "_all", 		## the suffix being added to the outlier column containing the flags for outliers based on the whole dataset.
 
@@ -57,18 +57,20 @@ stn <- list(
 	gen_numberOfCPUs = NA, 					## the number of CPUs used for parallel computing; leave at 'NA' for automatically using the system defaults
 	gen_showData_NIR = FALSE, 				## if the first rows of the NIR data should be printed as well wenn printing (showing) an object of class 'aquap_data' to the screen.
 	gen_versionCheckDataset = TRUE,			## if it should be checked if the dataset was created with an older version of package aquap2. Recommended value is TRUE.
-	gen_plot_anprocSource = "defFile", 		## the default way to obtain the analysis procedure when *PLOTTING*. Possible values are "cube" to take the analysis procedure from within the cube, "defFile" to load instead the default filename of the analysis procedure file, or provide a custom analysis procedure filename. (Ending in ".r")
+	gen_plot_anprocSource = "cube", 		## the default way to obtain the analysis procedure when *PLOTTING*. Possible values are "cube" to take the analysis procedure from within the cube, "defFile" to load instead the default filename of the analysis procedure file, or provide a custom analysis procedure filename. (Ending in ".r")
 	gen_plot_pgWhereDefault = "pdf",		## the default setting for the general plotting parameter 'pg.where'. If set to 'pdf', all graphics will be saved as a pdf. If anything but a pdf is provided, the graphics will be plotted to the graphics device.
 	gen_plot_maxNrDptInfoOnMain = 5, 		## the maximum number of data-pre-treatment modules info elements in the main of a title
 	gen_plot_legendPosition = "auto", 		## the default position of the legend in a plot. Leave at the default 'auto' for automatically detecting the best corner for the legend, provide one of "bottomright", "bottomleft", "topright" or "topleft" for choosing the resp. corner.
 	gen_calc_allowSubtrDiffHead = FALSE, 	## if subtractions of datasets having a different header structure should be allowed.
 	gen_calc_allowSubtrDiffWavels = TRUE,	## if subtractions of datasets having different sets of wavelengths should be allowed. If TRUE, this is only successful if the smaller set of wavelengths is completely within the bigger set of wavelengths. In this case, the bigger set is virtually cut down to the size of the smaller set. This can be necessary when function do_gapDer was used.
+	gen_plot_printEmptySlots = TRUE, 		## if, when plotting the cube, empty slots or those not selected for plotting should be announced.
+
 
 
 	## Import Data
 	imp_specFileType = "vision_NSAS.da",	## the filetype of the spectral data. Refer to the help for 'getFullData'  for possible values
-	imp_startDate = "2014-06-01 00:00:00",	## the start-date used to calculate the absolute number of minutes since then
-	imp_sampleListType = "csv", 			## the filetype of the sample list in the sampleLists/sl_in folder. Please refer to the help for "getFullData" for possible values.
+	imp_startDate = "2013-11-01 00:00:00",	## the start-date used to calculate the absolute number of minutes since then
+	imp_sampleListType = "xls", 			## the filetype of the sample list in the sampleLists/sl_in folder. Please refer to the help for "getFullData" for possible values.
 	imp_multiplyRows = TRUE,				## if all the rows in the sample list should be multiplied by the number of consecutive scans.
 	imp_autoCopyYvarsAsClass = TRUE, 		## if all available Y-Variables should be automatically copied as a class variable at the time of importing the data. Recommended value is TRUE.
 	imp_alwaysReduceTRHClasses = FALSE,		## if the T and rel. humidity classes should be always reduced, even if the values only contain a single decimal point. If set to FALSE, the T and rel. hum. classes will not be reduced if the values contain only a single decimal point.
@@ -78,7 +80,7 @@ stn <- list(
 	imp_RHRounding = 1, 					## digits precision for rounding when re-factoring the rel. humidity
 	imp_makeExpNameColumn = FALSE, 			## if a column containing the name of the experiment in every row should be added to the dataset. This is useful if you plan to fuse datasets from several experiments.
 	imp_makeTimeDistanceColumn = TRUE, 		## if, should a timestamp be available, a column with the time-distance from a user-defined point in time and an other with the chronological order (1:nrow enumeration) should be generated
-	imp_use_TRH_logfile = FALSE, 			## if and how values for temperature and relative humidity should be imported from an external logfile. See the help for 'getFullData' for information on possible values
+	imp_use_TRH_logfile = "ESPEC", 			## if and how values for temperature and relative humidity should be imported from an external logfile. See the help for 'getFullData' for information on possible values
 	imp_TRH_logfile_name = "TRHlog", 		## the name of the logfile for temperatur and rel.humidity in the rawdata folder.
 	imp_narrowMinutes = 3, 					## how many minutes ahead should be looked for matching log-data before going through the whole log file?
 	imp_secsNarrowPrecision = 10, 			## precision in seconds that log-data have to be within spectral acquisition time in the first, the narrowed-down search step (there is no precision step in the second search through the whole log file)
@@ -171,7 +173,7 @@ stn <- list(
 	plsr_limitNcompToLevels = TRUE, 		## if the max. nr of components (when determining the optimal number of components) should be limited to the number of levels in the y-variable to regress on, i.e. the uniques (excluding NAs)
 	plsr_percentObservAsMaxNcomp = 25,		## the percentage of the available number of observations indicating the maximally allowed number of components for the test-runs to determine the optimal number of components
 	plsr_nrCompsSwitchToNrObserv = 12,		## the number of maximum allowed number of components below which to the number of observations for defining the max. nr. of allowed components for the test-runs to determine the optimal number of components is switched     XXX explain better !!
-	plsr_nrTestIterations = 12, 			## how many repetitions should be calculated when getting the optimal number of components. Not the lowest number of components is chosen, but the one that comes up most often as the lowest.
+	plsr_nrTestIterations = 7,	 			## how many repetitions should be calculated when getting the optimal number of components. Not the lowest number of components is chosen, but the one that comes up most often as the lowest.
 	plsr_nrDigitsRMSEx = 4,					## rounding for the error values
 	plsr_nrDigitsPercentage = 1, 			## rounding for the display of percentage of total nr. of observations in the dataset after NAs have been removed
 	plsr_colorForBestNumberComps = "blue",	## the color for the vertical line in the error plot showing the best number of components
@@ -206,16 +208,16 @@ stn <- list(
 	aqg_plotWamacsLines = TRUE, 			## logical, if vertical lines for the WAMACs should be plotted. (Only applies to the linear Aquagram.)
 	aqg_linearXaxisTitle = "WAMACs", 		## the title for the X-axis in the linear type of Aquagram
 	aqg_nrDigitsAquagram = 2,				## the number of digits displayed in the standard Aquagram
-	aqg_linetypes = c(1,2,3),				## the default vector for the line-types to be used in the aquagram. Gets recycled.
+	aqg_linetypes = c(1),					## the default vector for the line-types to be used in the aquagram. Gets recycled.
 	aqg_correctNrOfObs = FALSE,				## if the number of observations in each spectral pattern should be corrected (if necessary by random sampling) so that all the spectral pattern are calculated out from the same number of observations
 	aqg_adPeakPlot = TRUE,					## if, should subtraction spectra be plotted, an additional plot with picked peaks should be added
 	aqg_AdLines = TRUE, 					## if the additional lines should be added to the plot (see XXX for details)
 	aqg_discrim = FALSE, 					## if, should subtraction spectra be plotted, it will be discriminated between "true" or "not true" positive peaks
 	aqg_defaultMod= "aucs.dce", 			## the default mode for the aquagram. See the help for XXX for possible values.
 	aqg_bootCI = FALSE, 					## if confidence intervalls for the selected wavelengths should be calculated within each group (using bootstrap)
-	aqg_bootUseParallel = TRUE, 			## if, should the CIs be calculated, this should be done in parallel
+	aqg_bootUseParallel = FALSE, 			## if, should the CIs be calculated, this should be done in parallel
 	aqg_bootR = "nrow@3",					## if aqg_bootCI = TRUE, how many bootstrap replicates should be performed? leave at "nrow@3" for e.g. 3 x nrow(samples) or provide a length one numeric
-	aqg_saveBootRes = TRUE, 				## if the bootstrap result should be saved under "bootResult" to the analysis-data folder
+	aqg_saveBootRes = FALSE, 				## if the bootstrap result should be saved under "bootResult" to the analysis-data folder
 	aqg_smoothCalib = 17,					## the smoothing (sav. golay) applied for the aucs ("area-under-the-curve-stabilization") calibration data
 	aqg_calibTRange = "symm@2", 			## the temperatur range picked out from the calibration data. Either numeric length two [e.g. c(28,32)], or character starting with 'symm@x', with 'x' being the plus and minus delta in temperature from the temperature of the experiment
 	aqg_Texp = 28.6,						## the temperature at which the measurements were done
@@ -225,11 +227,49 @@ stn <- list(
 	aqg_tempCalib_forceOutlExcl = TRUE, 	## if the exclusion of outliers in the temperature calibration dataset should be forced or not.
 	
 
+	## Classification
+	cl_gen_neverBootstrapForCV = FALSE,		## if bootstrap should NEVER be applied when crossvalidating any training dataset. Recommended value is FALSE.
+	cl_gen_digitsRoundConfTablePerc = 1, 	## the number of digits to which the confusion table in percent should be rounded to.
+	cl_gen_digitsRoundSDTablePerc = 1, 		## the number of digits to which the standard deviation tables should be rounded to.
+	cl_gen_digitsRoundTableAverages = 1, 	## the number of digits to which the general table averages should be rounded to.
+	cl_gen_digitsRoundCorrClass = 1, 		## the number of digits to which the general percentage of correct classification and its standard deviation should be rounded to.
+	cl_gen_digitsRoundNrObservations = 1, 	## the number of digits to which the calculations of the average number of observations (as shown in the plots) should be rounded to.
+	cl_gen_CvIndicator = ".", 				## the character used to indicate that we are doing traditional CV
+	cl_gen_bootIndicator = "`", 			## the character used to indicate that we are doing traditional CV
+	cl_gen_alwaysKeepData = FALSE, 			## if the argument below (cl_gen_keepDataFor) should be ignored and the data should be kept always, anyway
+	cl_gen_keepDataFor = c("lda", "qda", "fda", "mclustda"), 		## the type of classification for what data (training data, test data) should be kept.
+	cl_gen_enforceCriticalValue = TRUE, 	## if a minium number of observations defined by multiplying "cl_gen_factorMinGrp" (below) with the number of groups should be enforced. (see below)
+	cl_gen_factorMinGrp = 4, 				## this value multiplied by the number of groups (as defined by the classOn variable) is giving the minium numbers of observations that have to present in the smallest subgroup. Set to 1 to deactivate. IN DEVELOPMENT
+	cl_CV_inParallel = TRUE, 				## if traditional CV operations should be done in parallel
+	cl_boot_inParallel = TRUE,				## if bootstrapped CV operations should be done in parallel
+	cl_plot_CVandTestInOnePage = TRUE, 		## if the crossvalidation and test results should be printed on one page
+	cl_plot_addConfusionTables = TRUE,		## if the data of the confusion tables should be plotted as well
+	cl_plot_includeSDtables = TRUE, 		## if confusion tables containing the cell-wise standard deviation should be included when plotting the average confusion tables
+	cl_plot_baseTextSizeTables = 10, 		## the basic text size for tables (using gridExtra::ttheme_default)
+	cl_plot_CharForCV = "Crossvalidation",	## the character added to the title for crossvalidation graphics
+	cl_plot_CharForTest = "Test", 			## the character added to the title for test graphics
+	cl_plot_CharForIndepPredExtData = "Independent prediction external data",  ## the character added to the title for graphics with external provided independent data
+	cl_plot_CharForPcaReduction = "pcaRed", ## the character indicating that a PCA data reduction took place
+	cl_plot_avgTableTitle = "avg%",			## the character defining the title of the confusion tables holding the averages
+	cl_plot_sdTableTitle = "sd%", 			## the character defining the title of the confusion tables holding the standard deviations
+	cl_plot_confTablePadding = 2.5, 		## the padding of the confusion tables in mm
+	cl_plot_useColorsFromDataset = FALSE, 	## if the colors embedded in the dataset should be used. If set to FALSE, the standard colors via ggplot will be used.
+	cl_plot_colorErrorBar = "black",	 	## the color for the error bars. # darkviolet
+	cl_indepPred_exportToExcel = TRUE, 		## if an excel file with the results of an independent prediction should be produced.
+	cl_indepPred_printPairingMsg = TRUE, 	## if a message with the pairing of model and independent variable for validation should be displayed
+	cl_indepPred_confirm = TRUE, 			## if confirmation is required after showing the pairing information (see below) and before continuing the independent predictions
+	cl_indepPred_showInfo = TRUE, 			## if information should be displayed regarding the pairing of model-variables and the variables in the independent dataset used for validation. 
+	cl_extDatPred_N_lottoLoop = 2000, 		## the replicates of the loop estimating the number of exact duplicates of spectra in the blowup function (?do_blowup)
+
+
+
 	## plotting, PDFs
 	pdf_Height_ws = 5,						## when plotting to pdf, the settings for the format
 	pdf_Width_ws = 8.9,						## ws for widescreen (e.g. regressionvector, loading plots, raw)
 	pdf_Height_sq = 9,						## sq for square (e.g. scoreplots)
 	pdf_Width_sq = 9, 
+	pdf_Height_classif = 9, 				## the format for classification
+	pdf_Width_classif = 12, 				
 	plt_lengthLegend_limToCols = 20, 		## the limit of the length of the legend text determining when the legend text should be displayed in more than 1 column
 	plt_lengthLegend_truncate = 60, 		## the limit of the length of the legend text determining when the legend text should be truncated (displaying then the first 3, the middle 3, and the last 3 legend elements)
 	plt_legendMoreCols = 3, 				## the number of columns to display the legend in if the length of the legend is higher than the number specified in 'plt_lengthLegend_limToCols' above

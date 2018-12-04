@@ -23,11 +23,23 @@
 #' @importFrom pls mvrValstats
 # the 'importFrom' seems to be necessary due to a bug (?) in the pls package, 
 # so that these two functions can not be found 
+#
+# mda for: fda    ## otherwise the independent predictions (calc_classif_gen.r 865 crash. (I think they should not.))
+# MASS for: lda, qda
+# mclust for:  mclustda
+# e1071 for: svm
+#' @import mda 
+#' @import MASS
+#' @import mclust
+#' @import e1071
+#' @import nnet
+#' @import randomForest
 #'
 #' @import grDevices
 #' @import graphics
 #' @import stats
 #' @import utils
+#' @import jsonlite
 #'
 #' @docType package
 #' @name aquap2
